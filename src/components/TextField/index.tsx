@@ -21,7 +21,7 @@ const TextField: React.FC<Props> = ({
 
   return (
     <input
-      className="input bg-transparent text-white w-full"
+      className="input bg-transparent text-white w-full p-2"
       type="text"
       onBlur={onBlur}
       onFocus={onFocus}

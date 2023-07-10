@@ -1,1 +1,1 @@
-export type TCoordinates = [string, string];
+export type TCoordinates = [number, number];
