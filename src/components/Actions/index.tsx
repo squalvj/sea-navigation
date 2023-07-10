@@ -60,8 +60,9 @@ const Actions = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [coords, setCoords] = useState<CoordinatesMap[]>([]);
+  const [markers, setMarkers] = useState([])
 
-  console.log({ coords });
+  
 
   return (
     <div className="absolute top-0 left-0 bg-blue p-4 z-10 flex flex-col gap-4 w-[400px] text-white items-start">
