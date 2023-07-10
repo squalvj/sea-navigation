@@ -1,32 +1,38 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import debounce from "./../../utils/debounce";
 import TextField from "./../TextField";
 import Spinner from "./../Spinner";
 import ErrorComponent from "./../ErrorComponent";
-export type Suggestion = {
+export type Suggestion<T> = {
   label: string;
-  value: string | Record<string, any>;
+  value: T;
 };
 
-type SearchBoxProps = {
+type SearchBoxProps<T> = {
   onSearch: (query: string) => Promise<void>;
-  suggestionsOption: Suggestion[] | [];
-  handleClickSuggestion: (suggestion: Suggestion) => void;
+  suggestionsOption: Suggestion<T>[] | [];
+  handleClickSuggestion: (suggestion: Suggestion<T>) => void;
   loading: boolean;
   error: string;
-  placeholder: string
+  placeholder: string;
+  q: string;
 };
 
-const SearchBox: React.FC<SearchBoxProps> = ({
+const SearchBox: React.FC<SearchBoxProps<any>> = ({
   onSearch,
   suggestionsOption,
   loading,
   error,
   handleClickSuggestion,
-  placeholder
+  placeholder,
+  q,
 }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(q);
   const [isShow, setIsShow] = useState(false);
+
+  useEffect(() => {
+    if (query !== q) setQuery(q);
+  }, [q]);
 
   const fetchSuggestions = useCallback(
     debounce(async (value: string) => {
@@ -48,7 +54,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
 
   return (
     <div className="search-box w-full">
-      <div className="wrapper-searchbox">
+      <div className="wrapper-searchbox relative">
         <TextField
           onFocus={toggle}
           onBlur={toggle}
@@ -57,7 +63,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
           placeholder={placeholder}
         />
         {query.length >= 3 && isShow && (
-          <ul className="bg-white rounded-lg text-black p-4">
+          <ul className="bg-white rounded-lg text-black p-2">
             {loading && <Spinner />}
             {error && !loading && (
               <ErrorComponent onClick={() => fetchSuggestions(query)} />

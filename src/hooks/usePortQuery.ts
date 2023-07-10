@@ -3,15 +3,11 @@ import { Map } from "mapbox-gl";
 import { initMap } from "../utils/initMap";
 import { getPortByQuery } from "./../utils/searoute";
 import { TCoordinates } from "../types/coordinates";
-
-type Suggestion = {
-  value: TCoordinates;
-  label: string;
-};
+import { Suggestion } from "../components/SearchBox";
 
 const transformSuggestions = (
   suggestions: Record<string, any>[]
-): Suggestion[] => {
+): Suggestion<[string, string]>[] => {
   return suggestions.map((item) => ({
     value: item.geometry?.coordinates,
     label: item.properties?.name,
@@ -20,7 +16,7 @@ const transformSuggestions = (
 
 export const usePortQuery = (query: string = "") => {
   const [loading, setLoading] = useState(false);
-  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [suggestions, setSuggestions] = useState<Suggestion<[string, string]>[]>([]);
   const [q, setQ] = useState(query);
   const [error, setError] = useState("");
 
