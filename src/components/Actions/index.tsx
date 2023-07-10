@@ -38,7 +38,7 @@ const BoxPoint = ({
   placeholder,
 }: {
   query: string;
-  handleClickSuggestion: (param: Suggestion<[string, string]>) => void;
+  handleClickSuggestion: (param: Suggestion<TCoordinates>) => void;
   placeholder: string;
 }) => {
   const { loading, error, getPort, suggestions } = usePortQuery(query);
