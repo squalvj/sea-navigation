@@ -16,3 +16,6 @@ Make sure you grab the .env from .env.development and make sure REACT_APP_MAP_TO
 - node version v16.18.0
 - run `npm install`
 - run `npm start` for development version
+
+## Demo
+you can access the demo [here](https://squalvj.github.io/sea-navigation/)
