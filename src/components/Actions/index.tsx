@@ -75,6 +75,7 @@ const Actions = () => {
               console.log({e});
               setFrom(e.label);
               setCoords((prev) => [
+                ...prev,
                 { type: "FROM", coordinates: e.value },
               ]);
             }}
