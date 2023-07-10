@@ -2,11 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Map } from "mapbox-gl";
 import { initMap } from "../utils/initMap";
 
-// type TRoute = {
-//   id: string;
-//   features: any
-// }
-
 export const useMap = (container: React.RefObject<HTMLDivElement>) => {
   const mapInitRef = useRef<Map | null>(null);
   const [routes, setRoutes] = useState<string[]>([]);

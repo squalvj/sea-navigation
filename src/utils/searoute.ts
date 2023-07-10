@@ -1,4 +1,4 @@
-const token = "rdRl67Pp2h4cimJyUJLCL1etD8qHmsq17uYix2PW";
+const token = process.env.REACT_APP_SEAROUTES_TOKEN ?? ""
 
 type coord = {
   lng: number;
