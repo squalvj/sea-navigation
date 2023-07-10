@@ -17,11 +17,6 @@ function App() {
       <div className="App relative">
         <div>
           <MapView map={mapRef} />
-          {/* <div className="control absolute top-0 right-0 p-4 bg-white">
-          <button onClick={handleAddFrom}>
-            Add From
-          </button>
-        </div> */}
           <Actions />
         </div>
       </div>

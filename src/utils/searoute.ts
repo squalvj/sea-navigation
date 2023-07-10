@@ -1,4 +1,4 @@
-const token = "EDjcL47kc26WH1DF6HMh81P7hBvt1g3H925f303C";
+const token = "rdRl67Pp2h4cimJyUJLCL1etD8qHmsq17uYix2PW";
 
 type coord = {
   lng: number;

@@ -9,7 +9,7 @@ import { initMap } from "../utils/initMap";
 
 export const useMap = (container: React.RefObject<HTMLDivElement>) => {
   const mapInitRef = useRef<Map | null>(null);
-  const [routes, setRoutes] = useState("");
+  const [routes, setRoutes] = useState<string[]>([]);
 
   useEffect(() => {
     if (container.current) {
@@ -23,16 +23,17 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
   const drawPoint = ({ features, id }: Record<any, any>) => {
     if (mapInitRef.current) {
       if (Array.isArray(features)) {
-        features.forEach((f: any) => {
+        features.forEach((f: any, i) => {
+          const idx = id.join(";");
           try {
-            mapInitRef?.current?.addSource(`source-${id}`, {
+            mapInitRef?.current?.addSource(`source-${i}-${idx}`, {
               type: "geojson",
               data: f,
             });
             mapInitRef?.current?.addLayer({
-              id: `layer-${id}`,
+              id: `layer-${i}-${idx}`,
               type: "line",
-              source: `source-${id}`,
+              source: `source-${i}-${idx}`,
               layout: {
                 "line-join": "round",
                 "line-cap": "round",
@@ -42,7 +43,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
                 "line-width": 8,
               },
             });
-            setRoutes(id);
+            setRoutes((prev) => [...prev, `${i}-${idx}`]);
           } catch (_) {}
         });
       }
@@ -51,9 +52,14 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
 
   const clearPoint = () => {
     if (mapInitRef.current) {
-      if (routes) {
-        mapInitRef.current.removeSource(`source-${routes}`);
-        mapInitRef.current.removeLayer(`layer-${routes}`);
+      if (routes.length > 0) {
+        routes.forEach((r) => {
+          console.log({r})
+          try {
+            mapInitRef?.current?.removeSource(`source-${r}`);
+            mapInitRef?.current?.removeLayer(`layer-${r}`);
+          } catch (_) {}
+        });
       }
     }
   };
