@@ -77,7 +77,7 @@ const SearchBox: React.FC<SearchBoxProps<any>> = ({
               !error &&
               suggestionsOption.map((suggestion) => (
                 <li key={suggestion.label}>
-                  <button onClick={() => handleClickSuggestion(suggestion)}>
+                  <button className="w-full" onClick={() => handleClickSuggestion(suggestion)}>
                     {suggestion.label}
                   </button>
                 </li>
