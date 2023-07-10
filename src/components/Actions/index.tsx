@@ -4,11 +4,7 @@ import { generateNewMarker } from "../../utils/generateNewMarker";
 import { Marker } from "mapbox-gl";
 import { TCoordinates } from "../../types/coordinates";
 import BoxSearch from "../BoxSearch";
-
-type LatLong = {
-  lng: number | null;
-  lat: number | null;
-};
+import { getSeaRoutes } from "../../utils/searoute";
 
 type RouteTypes =
   | "FROM"
@@ -18,11 +14,6 @@ type RouteTypes =
   | "STOP_3"
   | "STOP_4"
   | "STOP_5";
-
-const DEFAULT_LNG_LAT = {
-  lng: null,
-  lat: null,
-};
 
 type TCoordinatesMap = {
   type: RouteTypes;
@@ -52,16 +43,16 @@ const Actions = () => {
       STOP_5: "Stop 5 Point",
     };
     const marker = generateNewMarker({
-      map: map?.current!,
+      map: map?.map?.current!,
       lat: coordinates[1],
       lng: coordinates[0],
       text: MAP_TYPES?.[type],
     });
 
-    map?.current?.flyTo({
+    map?.map?.current?.flyTo({
       center: coordinates,
       essential: true,
-      zoom: 10
+      zoom: 10,
     });
 
     setMarkers((prev) => [...prev, { type, marker }]);
@@ -75,6 +66,31 @@ const Actions = () => {
       setCoords((prev) => prev.filter((c) => c.type !== type));
     }
   };
+
+  useEffect(() => {
+    const from = coords.find((c) => c.type === "FROM")?.coordinates;
+    const to = coords.find((c) => c.type === "TO")?.coordinates;
+    map?.clearPoint();
+    if (from && to) {
+      const coordinates = [from, to].map(([lng, lat]) => ({ lng, lat }));
+      getSeaRoutes(coordinates)
+        .then((data) => {
+          const features = data?.features;
+          const error = data?.error;
+
+          if (error) {
+            alert("Route not found, please try another destination")
+          } else {
+            map?.drawPoint({ id: coordinates, features });
+          }
+        })
+        .catch((er) => {
+          alert("Something went wrong, try again")
+        });
+    }
+  }, [coords]);
+
+  console.log({ coords });
 
   return (
     <div className="absolute top-0 left-0 bg-blue p-4 z-10 flex flex-col gap-4 w-[400px] text-white items-start">

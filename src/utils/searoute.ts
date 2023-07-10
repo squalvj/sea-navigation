@@ -1,13 +1,13 @@
-const token = "RFQvdQyHR82SFC5k6Ii621zSzysjW2Fz9fy3cn8d";
+const token = "EDjcL47kc26WH1DF6HMh81P7hBvt1g3H925f303C";
 
 type coord = {
-  lng: string;
-  lat: string;
+  lng: number;
+  lat: number;
 };
 
 export async function getSeaRoutes(coords: coord[]) {
   const theCoords = coords.map((c) => `${c.lng},${c.lat}`).join(";");
-  const url = `https://api.searoutes.com/route/v2/sea/${theCoords}?continuousCoordinates=true&allowIceAreas=false&avoidHRA=false&avoidSeca=false`;
+  const url = `https://api.searoutes.com/route/v2/sea/${theCoords}?continuousCoordinates=true`;
   const options = {
     method: "GET",
     headers: {

@@ -1,4 +1,10 @@
 import { MutableRefObject, createContext } from "react";
 import { Map } from "mapbox-gl";
 
-export const MapContext = createContext<MutableRefObject<Map | null> | null>(null);
+type TMapContext = {
+    map: MutableRefObject<Map | null>
+    drawPoint: (a: Record<any, any>) => void
+    clearPoint: () => void
+}
+
+export const MapContext = createContext<TMapContext | null>(null);
