@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Introduction
+
+
+https://github.com/squalvj/sea-navigation/assets/11311253/13e5d0f9-5815-4a70-8ca1-ead76b6d82c8
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 This project is aim for the navigation, you can add starting point, destination point, and 5 stops.
