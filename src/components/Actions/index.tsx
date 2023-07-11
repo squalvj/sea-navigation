@@ -176,6 +176,7 @@ const Actions = () => {
             .filter((s) => s.enable)
             .map((s, i) => (
               <BoxSearch
+                key={s.id}
                 placeholder={`Choose Stop - (${i + 1}) point...`}
                 handleClickSuggestion={(e) => handleChooseStop(e, s.id)}
                 query={s.query}
